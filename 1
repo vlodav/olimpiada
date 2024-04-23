@@ -1,0 +1,26 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int main()
+{
+
+	setlocale(LC_ALL, "Russian");
+	int arr[10];
+	for (int i = 0; i < size(arr); i++)
+	{
+		cout << "введите оценку " << i + 1 << "\t";
+		cin >> arr[i];
+	}
+	int a = 0;
+	auto result = minmax_element(begin(arr), end(arr));
+	for (size_t i = 0; i < size(arr); i++)
+	{
+		if (arr[i] == *result.first || arr[i] == *result.second)
+		{
+			a++;
+		}
+
+	}
+	cout << "колво min and max: " << a << endl;
+	return 0;
+}
