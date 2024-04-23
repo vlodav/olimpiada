@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+#include <conio.h>
+#include <vector>
+#include<algorithm>
+using namespace std;
+int main() {
+    setlocale(LC_ALL, "Russian");
+    string input;
+    char c;
+    cout << "Введите строку (не более " << 250 << " символов): ";
+    while (input.length() < 250) {
+        c = _getch();
+
+        if (c == '\r') {
+            break;
+        }
+        if(c >='a' && c <='z')
+            input += c;
+            cout << c;
+    }
+    cout << endl;
+    vector<int> arr(26, 0);
+    for (char a : input)
+    {
+        arr[a -'a']++;
+    }
+    char g = 'z';
+    auto maxkolvo = max_element(begin(arr), end(arr));
+    for (int i = 25; i >=0; i--)
+    {
+        if (arr[i] == *maxkolvo)
+            g = 'a' +i;
+    }
+    string vivod(*maxkolvo, g);
+    cout <<"мальчик произнес:\n" << vivod << endl;
+    system("pause");
+    return 0;
+}
