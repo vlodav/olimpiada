@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int N, M;
+	cout << "Введите N ";
+	cin >> N;
+	cout << "Введите M ";
+	cin >> M;
+	int** arr = new int*[N];
+	for (int i = 0; i < N; i++)
+	{
+		arr[i] = new int[M];
+	}
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			cin >> arr[i][j];
+		}
+	}
+	for (int i = 0; i < N; i++)
+	{
+		int max = arr[i][0];
+		for (int j = 0; j < M; j++)
+		{
+			cout<<arr[i][j]<<"\t";
+		}
+		cout <<endl;
+	}
+	for (int i = 0; i < M; i++)
+	{
+		int max = arr[0][i];
+		for (int j = 0; j < N; j++)
+		{
+			if (max < arr[j][i])
+			{
+				max = arr[j][i];
+			}
+		}
+		cout << max<<endl;
+	}
+}
