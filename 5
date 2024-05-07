@@ -1,0 +1,50 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+struct MyStruct
+{
+	int Deadline,Const;
+};
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int N,day = 1,summ=0;
+	while (true)
+	{
+		cout << "введите количество предложений: ";
+		cin >> N;
+		if (1 <= N && 1000 >= N)
+			break;
+		else
+			cout << "вы ввели недопустимое количество!" << endl;
+	}
+	vector<MyStruct> arr(N);
+	for (int i = 0; i < N; i++)
+	{
+		cout << "введите сумму за задание:"<<i+1<<"\t";
+		cin >> arr[i].Const;
+		if (!(arr[i].Const <= 1000000 && arr[i].Const >= 0))
+		{
+			cout << "вы ввели недопустимую сумму" << endl;
+			continue;
+		}
+		cout << "введите количество дней на задание:" << i+1 << "\t";
+		cin >> arr[i].Deadline;
+		if (!(arr[i].Deadline <= 1000000 && arr[i].Deadline >= 1))
+		{
+			cout << "вы ввели недопустимое количество дней" << endl;
+			continue;
+		}
+	}
+	sort(begin(arr),end(arr), [](MyStruct& a, MyStruct& b) {return a.Const > b.Const; });
+	for (auto a : arr)
+	{
+		if (day < a.Deadline)
+		{
+			summ += a.Const;
+			day++;
+		}
+	}
+	cout <<"итого максимум: " << summ;
+}
