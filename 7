@@ -1,0 +1,45 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+int N = 0, M = 0,kolvo_ideal = 0;
+
+void proverka(int a)
+{
+	int sum_chet = 0, sum_nechet = 0,this_chislo = 0;
+	for (int j = N; j >= 1; j--)
+	{
+		this_chislo = a%10;
+		if (j % 2 == 0)
+			sum_chet += this_chislo;
+		else
+			sum_nechet += this_chislo;
+		a /= 10;
+	}
+	if (abs(sum_chet-sum_nechet)%M==0)
+	{
+		kolvo_ideal++;
+	}
+}
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	while (true)
+	{
+		cout << "введите длину чисел N(1...8) и число на которое оно должно делится M(1...20): ";
+		cin >> N;
+		cin >> M;
+		if (1 <= N && N <= 8 && 1 <= M && M <= 20)
+			break;
+		else
+			cout << "неверно введённые данные" << endl;
+	}
+	int dlina = pow(10, N);
+	int max_ = dlina-1;
+	int min_ = dlina / 10;
+	for (int i = min_; i <= max_; i++)
+	{
+		proverka(i);
+	}
+	cout << kolvo_ideal << endl;
+	system("pause");
+}
