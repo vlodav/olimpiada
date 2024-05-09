@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int maxSumRectangle(vector<vector<int>>& matrix) {
+    int N = matrix.size();
+    int M = matrix[0].size();
+    int maxSum = INT_MIN;
+
+    for (int left = 0; left < M; ++left) {
+        vector<int> temp(N, 0);
+        for (int right = left; right < M; ++right) {
+            for (int i = 0; i < N; ++i) {
+                temp[i] += matrix[i][right];
+            }
+
+            // Применяем алгоритм Кадане к массиву temp
+            int sum = 0;
+            int maxEndHere = 0;
+            for (int sumVal : temp) {
+                maxEndHere = max(maxEndHere + sumVal, sumVal);
+                sum = max(sum, maxEndHere);
+            }
+
+            maxSum = max(maxSum, sum);
+        }
+    }
+    return maxSum;
+}
+int main() {
+    setlocale(LC_ALL, "Russian");
+    int N = 0, M = 0; 
+    while (true)
+    {
+        cout << "введите размер матрицы N(1...300) на M(1...300): ";
+        cin >> N;
+        cin >> M;
+        if (1 <= N && 1 <= M && N <= 300 && M <= 300)
+            break;
+        cout << "вы ввели неверные данные"<<endl;
+    }
+    vector<vector<int>> matrix(N, vector<int>(M));
+    cout<<"заполните массив от значениями(-100...100)"<<endl;
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < M; )
+        {
+            cin >> matrix[i][j];
+            if (matrix[i][j] < -100 || matrix[i][j]>100) {
+                cout << "вы ввели не соответствующее число,введите заново" << endl;
+                continue;
+            }
+            j++;
+        }
+    }
+    cout << "Максимальная сумма прямоугольной области: " << maxSumRectangle(matrix) << endl;
+    return 0;
+}
