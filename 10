@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+
+// Функция для проверки, безопасно ли разместить коня на доске
+bool isSafe(int x, int y, std::vector<std::vector<int>>& board, int N) {
+    // Проверяем, что конь на данной позиции не атакуется другими конями
+    int dx[] = { -2, -2, -1, -1, 1, 1, 2, 2 };
+    int dy[] = { -1, 1, -2, 2, -2, 2, -1, 1 };
+    for (int i = 0; i < 8; i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        if (nx >= 0 && ny >= 0 && nx < N && ny < N && board[nx][ny] == 1)
+            return false;
+    }
+    return true;
+}
+
+// Рекурсивная функция для расстановки K коней на доске
+int placeKnights(int k, int start, int N, std::vector<std::vector<int>>& board) {
+    if (k == 0) {
+        // Все кони успешно расставлены
+        return 1;
+    }
+    int count = 0;
+    for (int i = start; i < N * N; i++) {
+        int x = i / N;
+        int y = i % N;
+        if (isSafe(x, y, board, N)) {
+            board[x][y] = 1; // Размещаем коня на доске
+            count += placeKnights(k - 1, i + 1, N, board);
+            board[x][y] = 0; // Убираем коня с доски (backtrack)
+        }
+    }
+    return count;
+}
+
+int main() {
+    int N, K;
+    std::cout << "Введите размеры доски N и количество коней K: ";
+    std::cin >> N >> K;
+    std::vector<std::vector<int>> board(N, std::vector<int>(N, 0));
+    std::cout << "Количество способов расставить " << K << " коней на доске " << N << "x" << N << ": " << placeKnights(K, 0, N, board) << std::endl;
+    return 0;
+}
