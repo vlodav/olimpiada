@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
-
+using namespace std;
 // Функция для проверки, безопасно ли разместить коня на доске
-bool isSafe(int x, int y, std::vector<std::vector<int>>& board, int N) {
+bool isSafe(int x, int y, vector<vector<int>>& board, int N) {
     // Проверяем, что конь на данной позиции не атакуется другими конями
     int dx[] = { -2, -2, -1, -1, 1, 1, 2, 2 };
     int dy[] = { -1, 1, -2, 2, -2, 2, -1, 1 };
@@ -16,7 +16,7 @@ bool isSafe(int x, int y, std::vector<std::vector<int>>& board, int N) {
 }
 
 // Рекурсивная функция для расстановки K коней на доске
-int placeKnights(int k, int start, int N, std::vector<std::vector<int>>& board) {
+int placeKnights(int k, int start, int N, vector<vector<int>>& board) {
     if (k == 0) {
         // Все кони успешно расставлены
         return 1;
@@ -35,10 +35,21 @@ int placeKnights(int k, int start, int N, std::vector<std::vector<int>>& board) 
 }
 
 int main() {
-    int N, K;
-    std::cout << "Введите размеры доски N и количество коней K: ";
-    std::cin >> N >> K;
-    std::vector<std::vector<int>> board(N, std::vector<int>(N, 0));
-    std::cout << "Количество способов расставить " << K << " коней на доске " << N << "x" << N << ": " << placeKnights(K, 0, N, board) << std::endl;
+    setlocale(LC_ALL, "Russian");
+    int N = 0, K = 0;
+    while (true)
+    {
+        cout << "Введите размеры доски N и количество коней K: ";
+        cin >> N;
+        cin >> K;
+        if (1 <= N && N <= 10 && 1 <= K && K <= N * N)
+        {
+            break;
+        }
+        cout << "вы ввели недопустимые значения" << endl;
+    }
+    vector<vector<int>> board(N, vector<int>(N, 0));
+    cout << "Количество способов расставить " << K << " коней на доске " << N << "x" << N << ": " << placeKnights(K, 0, N, board) << endl;
     return 0;
+
 }
