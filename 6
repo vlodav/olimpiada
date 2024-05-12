@@ -1,0 +1,84 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <queue>
+using namespace std;
+
+struct MyStruct {
+    int chislo;
+    bool b = true;
+};
+
+int N, M;
+vector<vector<MyStruct>> arr;
+vector<vector<bool>> visited;
+
+int dx[] = { -1, 0, 1, 0 };
+int dy[] = { 0, 1, 0, -1 };
+
+int bfs(int x, int y) {
+    queue<pair<int, int>> q;
+    q.push({ x, y });
+    visited[x][y] = true;
+    int sum = arr[x][y].chislo;
+
+    while (!q.empty()) {
+        int cx = q.front().first;
+        int cy = q.front().second;
+        q.pop();
+
+        for (int i = 0; i < 4; i++) {
+            int nx = cx + dx[i];
+            int ny = cy + dy[i];
+
+            if (nx >= 0 && nx < N && ny >= 0 && ny < M && !visited[nx][ny] && arr[nx][ny].b) {
+                visited[nx][ny] = true;
+                sum += arr[nx][ny].chislo;
+                q.push({ nx, ny });
+            }
+        }
+    }
+
+    return sum;
+}
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    string proverka;
+
+    while (true) {
+        cout << "введите количество строк N и столбцов M: ";
+        cin >> N >> M;
+        if (1 <= N && M >= 1 && N <= 100 && M <= 100) {
+            break;
+        }
+        cout << "вы ввели неверные данные!" << endl;
+    }
+
+    arr = vector<vector<MyStruct>>(N, vector<MyStruct>(M));
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            cin >> proverka;
+            if (proverka == "-") {
+                proverka = "0";
+                arr[i][j].b = false;
+            }
+            arr[i][j].chislo = stoi(proverka);
+        }
+    }
+
+    visited = vector<vector<bool>>(N, vector<bool>(M, false));
+    int maxSum = 0;
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            if (!visited[i][j] && arr[i][j].b) {
+                maxSum = max(maxSum, bfs(i, j));
+            }
+        }
+    }
+
+    cout << "Максимальная сумма кладов: " << maxSum << endl;
+
+    return 0;
+}
