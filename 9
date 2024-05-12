@@ -1,17 +1,22 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <thread>
 using namespace std;
+int N = 0, M = 0;
 int maxSumRectangle(vector<vector<int>>& matrix) {
     int N = matrix.size();
     int M = matrix[0].size();
     int maxSum = INT_MIN;
+    int maxelem = INT_MIN;
 
     for (int left = 0; left < M; ++left) {
         vector<int> temp(N, 0);
         for (int right = left; right < M; ++right) {
             for (int i = 0; i < N; ++i) {
                 temp[i] += matrix[i][right];
+                if (matrix[i][right] > maxelem)
+                    maxelem = matrix[i][right];
             }
 
             // Применяем алгоритм Кадане к массиву temp
@@ -25,11 +30,13 @@ int maxSumRectangle(vector<vector<int>>& matrix) {
             maxSum = max(maxSum, sum);
         }
     }
-    return maxSum;
+    if (maxelem < 0)
+        return maxelem;
+    else
+        return maxSum;
 }
 int main() {
     setlocale(LC_ALL, "Russian");
-    int N = 0, M = 0; 
     while (true)
     {
         cout << "введите размер матрицы N(1...300) на M(1...300): ";
