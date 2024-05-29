@@ -4,18 +4,71 @@ using namespace std;
 int main() {
     setlocale(LC_ALL, "Russian");
     int x0, y0, R, N;
-    cout << "введите: х0 у0 радиус количество обонентов:\t";
+    cout << "введите: х0, у0, радиус, количество обонентов:\t";
     cin >> x0 >> y0 >> R >> N;
+	while(true)
+	{
+		if(1<=x0 &&1<=y0&&x0<=1000&&y0<=1000&&1<=N&&N<=100)
+		{
+			break;
+		}
+		if(!(1<=x0 &&1<=y0&&x0<=1000&&y0<=1000))
+		{
+			while(true)
+			{
+				cout<<"введите координаты x0,y0 абонента - "<<endl;
 
+				cin >> x0 >> y0;
+				if(1<=x0 &&1<=y0&&x0<=1000&&y0<=1000)
+				{
+					break;
+				}
+				else
+				{
+					cout<<"вы ввели недопустимые координаты!"<<endl;
+				}
+			}
+			
+		}
+		if(1<=N&&N<=100)
+		{
+			cout<<"введите количество обанентов - ";
+			cin>>N;
+			if(1<=N&&N<=100)
+			{
+				break;
+			}
+			else
+			{
+				cout<<"вы ввели нодопустимое количество обонентов"<<endl;
+			}
+		}
+		
+	}
     int count = 0;
     for (int i = 0; i < N; ++i) {
-        int x, y;
-        cin >> x >> y;
+		int x, y;
+		while(true)
+		{
+			cout<<"введите координаты x,y абонента - "<<i+1<<endl;
+
+			cin >> x >> y;
+			if(1<=x &&1<=y&&x<=1000&&y<=1000)
+			{
+				break;
+			}
+			else
+			{
+				cout<<"вы ввели недопустимые координаты!"<<endl;
+			}
+		}
+		
         if (sqrt(pow(x - x0, 2) + pow(y - y0, 2)) > R) {
             ++count;
         }
     }
 
     cout << count << endl;
+	system("pause");
     return 0;
 }
