@@ -20,21 +20,18 @@ int main()
 			cout << "вы ввели недопустимое количество!" << endl;
 	}
 	vector<MyStruct> arr(N);
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < N; )
 	{
-		cout << "введите сумму за задание:"<<i+1<<"\t";
+		cout << "введите сумму за задание и количество днекй на выполнение :"<<i+1<<"\t";
 		cin >> arr[i].Const;
-		if (!(arr[i].Const <= 1000000 && arr[i].Const >= 0))
-		{
-			cout << "вы ввели недопустимую сумму" << endl;
-			continue;
-		}
-		cout << "введите количество дней на задание:" << i+1 << "\t";
 		cin >> arr[i].Deadline;
-		if (!(arr[i].Deadline <= 1000000 && arr[i].Deadline >= 1))
+		if ((arr[i].Const <= 1000000 && arr[i].Const >= 0)&&(arr[i].Deadline <= 1000000 && arr[i].Deadline >= 1))
 		{
-			cout << "вы ввели недопустимое количество дней" << endl;
-			continue;
+			i++;
+		}
+		else if (!(arr[i].Const <= 1000000 && arr[i].Const >= 0)||!(arr[i].Deadline <= 1000000 && arr[i].Deadline >= 1))
+		{
+			cout << "вы ввели недопустимую сумму или дни" << endl;
 		}
 	}
 	sort(begin(arr),end(arr), [](MyStruct& a, MyStruct& b) {return a.Const > b.Const; });
@@ -46,5 +43,6 @@ int main()
 			day++;
 		}
 	}
-	cout <<"итого максимум: " << summ;
+	cout <<"итого максимум: " << summ<<endl;
+	system("pause");
 }
